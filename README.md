@@ -17,14 +17,14 @@ This project strictly adheres to a **Service Pattern** to ensure the controller 
 ## 🚀 Installation & System Configuration
 
 ### Prerequisites
-- PHP >= 8.1 (Optimized via Laravel Herd)
+- PHP >= 8.5 (Optimized via Laravel Herd)
 - Composer
 
 ### Setup Steps
 1. **Clone the Repository:**
    ```bash
-   git clone <your-repository-url>
-   cd weather-exam
+   git clone https://github.com/mcalvinjavier/weather-api
+   cd weather-api
 Install Composer Dependencies:
 
 Bash
@@ -37,11 +37,13 @@ Open .env and configure your OpenWeatherMap credentials without surrounding spac
 
 Code snippet
 OPENWEATHER_API_KEY=01225945f1ddd4ed1094a11a6d1e343a
-OPENWEATHER_BASE_URL=[https://api.openweathermap.org/data/2.5](https://api.openweathermap.org/data/2.5)
+OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/2.5
 Generate App Security Key:
 
 Bash
 php artisan key:generate
+
+
 🔗 Available Endpoints
 1. Fresh Live Weather Data
 URL: GET /api/weather/{city}
@@ -55,7 +57,7 @@ URL: GET /api/weather/{city}/cached
 
 Behavior: Checks cache blocks first; serves from storage mapping "source": "cache" if found. Stays valid for exactly 10 minutes.
 
-Example: http://weather-exam.test/api/weather/manila/cached
+Example: http://weather-api.test/api/weather/manila/cached
 
 🧪 Automated Testing
 The feature tests leverage Laravel's standard Http::fake validation layers to fully execute assertions without exhausting open external API tokens or running database migrations.
@@ -64,4 +66,4 @@ To run the full test suite using your current runtime configurations, execute:
 
 Bash
 php artisan test
-(If your local system terminal relies on isolated environment paths, use: C:\Users\MAC\.config\herd\bin\php artisan test)
+(If your local system terminal relies on isolated environment paths, use: C:\Users\NAME\.config\herd\bin\php artisan test)
