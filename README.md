@@ -1,66 +1,67 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Weather API Integration Service
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A lightweight, clean Laravel backend application that integrates with the OpenWeatherMap API to retrieve real-time and cached city weather metrics. Built to showcase clean separation of concerns, modern PHP 8 features, and structured error boundaries.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🛠️ Architecture & Approach
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project strictly adheres to a **Service Pattern** to ensure the controller has zero knowledge of the network operations or data mapping formatting rules:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **`WeatherController`**: Manages pure incoming HTTP layers, route endpoint targets, and formats semantic JSON exception boundaries cleanly.
+2. **`WeatherService`**: Consumes configuration details, communicates directly with OpenWeatherMap using Laravel's fluent `Http` client, transforms payload values safely using PHP 8 safe operators, and coordinates the 10-minute caching layer.
+3. **Data Caching Strategy**: Utilizes automated `Cache::has` evaluation constraints. If a city request hits the cache bucket, the data tracking property dynamically updates its identifier to `"source": "cache"` before passing data down the stack.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🚀 Installation & System Configuration
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Prerequisites
+- PHP >= 8.1 (Optimized via Laravel Herd)
+- Composer
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Setup Steps
+1. **Clone the Repository:**
+   ```bash
+   git clone <your-repository-url>
+   cd weather-exam
+Install Composer Dependencies:
 
-## Laravel Sponsors
+Bash
+composer install
+Establish Environment Configs:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Bash
+cp .env.example .env
+Open .env and configure your OpenWeatherMap credentials without surrounding space properties:
 
-### Premium Partners
+Code snippet
+OPENWEATHER_API_KEY=01225945f1ddd4ed1094a11a6d1e343a
+OPENWEATHER_BASE_URL=[https://api.openweathermap.org/data/2.5](https://api.openweathermap.org/data/2.5)
+Generate App Security Key:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Bash
+php artisan key:generate
+🔗 Available Endpoints
+1. Fresh Live Weather Data
+URL: GET /api/weather/{city}
 
-## Contributing
+Behavior: Fetches real-time API details from the live server.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Example: http://weather-exam.test/api/weather/manila
 
-## Code of Conduct
+2. Cached Weather Data
+URL: GET /api/weather/{city}/cached
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Behavior: Checks cache blocks first; serves from storage mapping "source": "cache" if found. Stays valid for exactly 10 minutes.
 
-## Security Vulnerabilities
+Example: http://weather-exam.test/api/weather/manila/cached
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+🧪 Automated Testing
+The feature tests leverage Laravel's standard Http::fake validation layers to fully execute assertions without exhausting open external API tokens or running database migrations.
 
-## License
+To run the full test suite using your current runtime configurations, execute:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Bash
+php artisan test
+(If your local system terminal relies on isolated environment paths, use: C:\Users\MAC\.config\herd\bin\php artisan test)
