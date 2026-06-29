@@ -27,21 +27,22 @@ This project strictly adheres to a **Service Pattern** to ensure the controller 
    cd weather-api
 Install Composer Dependencies:
 
-Bash
-composer install
-Establish Environment Configs:
+    bash
+    composer install
+    Establish Environment Configs:
 
-Bash
-cp .env.example .env
+    bash
+    cp .env.example .env
+    
 Open .env and configure your OpenWeatherMap credentials without surrounding space properties:
 
-Code snippet
-OPENWEATHER_API_KEY=01225945f1ddd4ed1094a11a6d1e343a
-OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/2.5
+    Code snippet
+        OPENWEATHER_API_KEY=01225945f1ddd4ed1094a11a6d1e343a
+        OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/2.5
 Generate App Security Key:
 
-Bash
-php artisan key:generate
+    Bash
+    php artisan key:generate
 
 
 🔗 Available Endpoints
