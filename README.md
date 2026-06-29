@@ -27,21 +27,19 @@ This project strictly adheres to a **Service Pattern** to ensure the controller 
    cd weather-api
 Install Composer Dependencies:
 
-    bash
     composer install
-    Establish Environment Configs:
 
-    bash
+Establish Environment Configs:
+
     cp .env.example .env
     
 Open .env and configure your OpenWeatherMap credentials without surrounding space properties:
 
-    Code snippet
         OPENWEATHER_API_KEY=01225945f1ddd4ed1094a11a6d1e343a
         OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/2.5
+
 Generate App Security Key:
 
-    Bash
     php artisan key:generate
 
 
@@ -65,6 +63,7 @@ The feature tests leverage Laravel's standard Http::fake validation layers to fu
 
 To run the full test suite using your current runtime configurations, execute:
 
-Bash
-php artisan test
-(If your local system terminal relies on isolated environment paths, use: C:\Users\NAME\.config\herd\bin\php artisan test)
+```Bash
+    php artisan test
+
+
