@@ -49,7 +49,7 @@ URL: GET /api/weather/{city}
 
 Behavior: Fetches real-time API details from the live server.
 
-Example: http://weather-exam.test/api/weather/manila
+Example: http://weather-api.test/api/weather/manila
 
 2. Cached Weather Data
 URL: GET /api/weather/{city}/cached
